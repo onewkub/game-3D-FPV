@@ -7,17 +7,27 @@ public class EnermyScript : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;
     public Transform[] wayPoints;
-
+    private Transform PlayerLastPosition;
     public GameObject Player;
+    private bool playerCollectedItem;
     int m_currIndex;
     private void Start()
     {
         navMeshAgent.SetDestination(wayPoints[0].position);
+        playerCollectedItem = false;
     }
 
     void Update()
     {
-        checkDest();
+        if (playerCollectedItem)
+        {
+            changeDest();
+            playerCollectedItem = false;
+        }
+        else
+        {
+            checkDest();
+        }
     }
     private void checkDest()
     {
@@ -28,13 +38,22 @@ public class EnermyScript : MonoBehaviour
             navMeshAgent.SetDestination(wayPoints[m_currIndex].position);
         }
     }
-
+    private void changeDest()
+    {
+        navMeshAgent.SetDestination(PlayerLastPosition.position);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform == Player.transform)
         {
             Debug.Log("It crash");
-            Destroy(Player);
+            //Destroy(Player);
         }
+    }
+
+    public void itemIsCollected()
+    {
+        PlayerLastPosition = Player.transform;
+        playerCollectedItem = true;
     }
 }
