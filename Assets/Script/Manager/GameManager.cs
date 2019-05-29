@@ -46,7 +46,7 @@ public class GameManager : Singleton<GameManager>
         // use for tell all enemy the player position
         foreach (GameObject enemy in enemyList)
         {
-            EnermyScript script = enemy.GetComponent<EnermyScript>();
+            EnemyScript script = enemy.GetComponent<EnemyScript>();
             script.SetPos();
         }
     }

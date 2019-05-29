@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerView : MonoBehaviour
 {
-    public float mouseSemsitive;
+    public float mouseSensitive;
     public Transform PlayerBody;
     private float xAxisClamp;
     private void Awake()
@@ -19,8 +19,8 @@ public class PlayerView : MonoBehaviour
 
     private void CameraRotation()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSemsitive * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSemsitive * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitive * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitive * Time.deltaTime;
         xAxisClamp += mouseY;
 
         if (xAxisClamp > 90.0f)

@@ -6,7 +6,7 @@ public class RaycastPointer : MonoBehaviour
 {
     private string itemTag = "CollectionItem";
     public Transform PlayerBody;
-    public EnermyScript enermy;
+    public EnemyScript enermy;
     public float range = 20f;
     // Update is called once per frame
     void Update()
