@@ -10,7 +10,10 @@ public class EnemyScript : MonoBehaviour
     private Transform PlayerLastPosition;
     public GameObject Player;
     private bool lastPosChange;
-    int m_currIndex;
+    private int m_currIndex;
+
+    public float visibilityRange = 20f;
+    public Transform debugPoint;
     private void Start()
     {
         navMeshAgent.SetDestination(wayPoints[0].position);
@@ -28,12 +31,22 @@ public class EnemyScript : MonoBehaviour
         {
             checkDest();
         }
+
+        // Player follow
+        if(Physics.Linecast(transform.position, Player.transform.position, out RaycastHit hit))
+        {
+            Debug.DrawLine(transform.position, Player.transform.position);
+            if (hit.transform.CompareTag("Player") && hit.distance < visibilityRange)
+            {
+                SetPos();
+            }
+        }
     }
     private void checkDest()
     {
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            //Debug.Log("new Dest");
+            Debug.Log("new Dest");
             m_currIndex = (m_currIndex + 1) % wayPoints.Length;
             navMeshAgent.SetDestination(wayPoints[m_currIndex].position);
         }
@@ -55,5 +68,6 @@ public class EnemyScript : MonoBehaviour
     {
         PlayerLastPosition = Player.transform;
         lastPosChange = true;
+        debugPoint.position = PlayerLastPosition.position;
     }
 }

@@ -19,8 +19,7 @@ public class RaycastPointer : MonoBehaviour
 
     void SelectIt()
     {
-        RaycastHit hit;
-        if(Physics.Raycast(PlayerBody.transform.position, PlayerBody.transform.forward, out hit, range))
+        if(Physics.Raycast(PlayerBody.transform.position, PlayerBody.transform.forward, out RaycastHit hit, range))
         {
 
             if (hit.transform.CompareTag(itemTag))
