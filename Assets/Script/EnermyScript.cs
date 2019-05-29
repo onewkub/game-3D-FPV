@@ -9,20 +9,20 @@ public class EnermyScript : MonoBehaviour
     public Transform[] wayPoints;
     private Transform PlayerLastPosition;
     public GameObject Player;
-    private bool playerCollectedItem;
+    private bool lastPosChange;
     int m_currIndex;
     private void Start()
     {
         navMeshAgent.SetDestination(wayPoints[0].position);
-        playerCollectedItem = false;
+        lastPosChange = false;
     }
 
     void Update()
     {
-        if (playerCollectedItem)
+        if (lastPosChange)
         {
             changeDest();
-            playerCollectedItem = false;
+            lastPosChange = false;
         }
         else
         {
@@ -51,9 +51,9 @@ public class EnermyScript : MonoBehaviour
         }
     }
 
-    public void itemIsCollected()
+    public void SetPos()
     {
         PlayerLastPosition = Player.transform;
-        playerCollectedItem = true;
+        lastPosChange = true;
     }
 }

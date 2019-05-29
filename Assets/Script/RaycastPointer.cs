@@ -25,8 +25,7 @@ public class RaycastPointer : MonoBehaviour
 
             if (hit.transform.CompareTag(itemTag))
             {
-                enermy.itemIsCollected();
-                Destroy(hit.transform.gameObject, 0.2f);
+                GameManager.Instance.pickUpItem(hit.transform.gameObject);
             }
         }
         
