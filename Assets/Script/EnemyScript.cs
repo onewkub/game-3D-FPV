@@ -11,9 +11,10 @@ public class EnemyScript : MonoBehaviour
     public GameObject Player;
     private bool lastPosChange;
     private int m_currIndex;
+    private bool chasePlayer = false;
 
     public float visibilityRange = 20f;
-    public Transform debugPoint;
+    public float nearRange = 0.5f;
     private void Start()
     {
         navMeshAgent.SetDestination(wayPoints[0].position);
@@ -24,37 +25,59 @@ public class EnemyScript : MonoBehaviour
     {
         if (lastPosChange)
         {
-            changeDest();
+            ChangeDest();
             lastPosChange = false;
         }
         else
         {
-            checkDest();
+            CheckDest();
         }
 
-        // Player follow
+        // Player follow (use line cast for obstacle check)
         if(Physics.Linecast(transform.position, Player.transform.position, out RaycastHit hit))
         {
             Debug.DrawLine(transform.position, Player.transform.position);
             if (hit.transform.CompareTag("Player") && hit.distance < visibilityRange)
             {
-                SetPos();
+                if (hit.distance < nearRange)
+                {
+                    // make enemy able to sense if player is very close
+                    SetPos();
+                    chasePlayer = true;
+                }
+                else if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position)) < 30)
+                {
+                    // if player in forward line of sight (30 deg angle)
+                    SetPos();
+                    chasePlayer = false;
+                }
+                
             }
         }
+        
     }
-    private void checkDest()
+    private void CheckDest()
     {
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            Debug.Log("new Dest");
-            m_currIndex = (m_currIndex + 1) % wayPoints.Length;
-            navMeshAgent.SetDestination(wayPoints[m_currIndex].position);
+            //Debug.Log("new Dest");
+            if (chasePlayer)
+            {
+                chasePlayer = false;
+                //TODO: make enemy wander toward rotation player last seen
+            }
+            else
+            {
+                m_currIndex = (m_currIndex + 1) % wayPoints.Length;
+                navMeshAgent.SetDestination(wayPoints[m_currIndex].position);
+            }
         }
     }
-    private void changeDest()
+    private void ChangeDest()
     {
         navMeshAgent.SetDestination(PlayerLastPosition.position);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform == Player.transform)
@@ -68,6 +91,5 @@ public class EnemyScript : MonoBehaviour
     {
         PlayerLastPosition = Player.transform;
         lastPosChange = true;
-        debugPoint.position = PlayerLastPosition.position;
     }
 }
