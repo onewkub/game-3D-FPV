@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -232,7 +232,6 @@ GameObject:
   - component: {fileID: 172350203}
   - component: {fileID: 172350206}
   - component: {fileID: 172350201}
-  - component: {fileID: 172350202}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -240,24 +239,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &172350201
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172350200}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
---- !u!65 &172350202
-BoxCollider:
+--- !u!143 &172350201
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -267,7 +250,12 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Height: 0.9
+  m_Radius: 0.4
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &172350203
 MeshRenderer:
@@ -1233,6 +1221,13 @@ MonoBehaviour:
   - {fileID: 1268973679}
   - {fileID: 726825733}
   Player: {fileID: 172350200}
+  lineOfSight: 30
+  quickThreshold: 2.5
+  visibilityRange: 20
+  movingVisibilityMultiplier: 1.7
+  nearRange: 0.5
+  detectTime: 0.2
+  slowDetectMultiplier: 2
 --- !u!136 &1356041696
 CapsuleCollider:
   m_ObjectHideFlags: 0

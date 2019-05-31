@@ -7,10 +7,12 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed;
     public float runSpeed;
     Rigidbody PlayerRigiBody;
+    CharacterController characterController;
 
     private void Awake()
     {
         PlayerRigiBody = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
@@ -26,24 +28,20 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveForward = transform.forward * VertInput;
         Vector3 moveSide = transform.right * HorizInput;
 
+
+        
         if (isWalking)
         {
-            //Debug.Log("isWalking");
             if (Input.GetButton("Sprint"))
             {
-                PlayerRigiBody.velocity = (moveForward + moveSide).normalized * runSpeed * Time.deltaTime;
+                characterController.SimpleMove(Vector3.ClampMagnitude(moveForward + moveSide, 1.0f) * runSpeed);
                 //Debug.Log("Running");
             }
             else
             {
-                PlayerRigiBody.velocity = (moveForward + moveSide).normalized * walkSpeed * Time.deltaTime;
-                //Debug.Log("Walking");
+                characterController.SimpleMove(Vector3.ClampMagnitude(moveForward + moveSide, 1.0f) * walkSpeed);
+
             }
-        }
-        else
-        {
-            //Debug.Log("is Not Walking");
-            PlayerRigiBody.velocity = Vector3.zero;
         }
     }
 }
