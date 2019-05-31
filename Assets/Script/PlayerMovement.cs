@@ -31,19 +31,19 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("isWalking");
             if (Input.GetButton("Sprint"))
             {
-                PlayerRigiBody.velocity = (moveForward + moveSide) * runSpeed;
+                PlayerRigiBody.velocity = (moveForward + moveSide).normalized * runSpeed * Time.deltaTime;
                 //Debug.Log("Running");
             }
             else
             {
-                PlayerRigiBody.velocity = (moveForward + moveSide) * walkSpeed;
+                PlayerRigiBody.velocity = (moveForward + moveSide).normalized * walkSpeed * Time.deltaTime;
                 //Debug.Log("Walking");
             }
         }
         else
         {
             //Debug.Log("is Not Walking");
-            PlayerRigiBody.velocity = new Vector3(0f, 0f, 0f);
+            PlayerRigiBody.velocity = Vector3.zero;
         }
     }
 }
