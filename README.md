@@ -1,5 +1,5 @@
 # 3D game for Science Day CMU
 
-**using unity 2019.1.0f2 only**
+**using unity 2019.1.5 only**
 
-[download link (need unity hub)](unityhub://2019.1.0f2/292b93d75a2c)
+need git lfs for cloning the project (and push pull, all the stuff)
