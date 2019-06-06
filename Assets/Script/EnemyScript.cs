@@ -10,9 +10,11 @@ public class EnemyScript : MonoBehaviour
     public Transform[] wayPoints;
     private Transform PlayerLastPosition;
     public GameObject Player;
+    //public GameObject EnemyBody;
     private Rigidbody playerBody;
     private bool lastPosChange;
     private int m_currIndex;
+    private Animator animator;
     
     [Header("Enemy Detection System")]
     [Tooltip("Increse the detection speed when player stand still")]
@@ -39,10 +41,12 @@ public class EnemyScript : MonoBehaviour
         lastPosChange = false;
         playerBody = Player.GetComponent<Rigidbody>();
         quickThreshold = Mathf.Sqrt(quickThreshold);
+        //animator = EnemyBody.GetComponent<Animator>();
     }
 
     void Update()
     {
+        //animator.SetBool("walking", true);
         if (lastPosChange)
         {
             ChangeDest();
@@ -128,6 +132,7 @@ public class EnemyScript : MonoBehaviour
         if(other.transform == Player.transform)
         {
             Debug.Log("It crash");
+            
             //Destroy(Player);
         }
     }
