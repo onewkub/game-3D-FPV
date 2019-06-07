@@ -8,11 +8,13 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed;
     Rigidbody PlayerRigiBody;
     CharacterController characterController;
+    AudioSource walkingSound;
 
     private void Awake()
     {
         PlayerRigiBody = GetComponent<Rigidbody>();
         characterController = GetComponent<CharacterController>();
+        walkingSound = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -39,9 +41,17 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                if (!walkingSound.isPlaying)
+                {
+                    walkingSound.Play();
+                }
                 characterController.SimpleMove(Vector3.ClampMagnitude(moveForward + moveSide, 1.0f) * walkSpeed);
 
             }
+        }
+        else
+        {
+            walkingSound.Stop();
         }
     }
 }
